@@ -1,10 +1,11 @@
 # Project - US-Zipcode-Distance
 
 
-Code to create a Pairwise Zip code Distance Matrix and use an index lookup. This is a tiny utility I built, for use in my work, but I figured it might be helpful to anyone else dealing with zip/postal code distances.
+Code to create a Pairwise Zip code Distance Matrix and use an index lookup. This is a tiny utility I built, for use in my work, but I figured it might be helpful to anyone else dealing with zip/postal code distances. This can be a huge and efficient time saver if you're working with large data and need to keep hitting some sort of a zip/latlong service API multiple times. 
 
-The idea is to form a (41483,41483) matrix where the cell values are the `haversine distances` between two zips that are indexed. We save the index look up and the matrix file as .npy, .json or .pkl to reload and use in different projects
+The idea is to form a (41483,41483) matrix where the cell values are the `haversine distances` between two zips that are indexed. I save the index look up and the matrix file as .npz, .json or .pkl to reload and use in different projects. I hope this saves your effort when you're working with data streams or pandas dataframes and want to avoid iterating, using pypi package or a custom apply function to calculate distance between 2 zipcodes multiple times.
 
+Use this matrix and vectorize your operations !
 
 ![Numpy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
 ![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
@@ -14,8 +15,19 @@ The idea is to form a (41483,41483) matrix where the cell values are the `havers
 Install the folllowing python packages
 
 ```python
-pip install -r requirements.txt
+pip install pandas
+pip install numpy
+pip install mpu
 ```
+
+## Running the script
+
+Since the the matrix is too huge to upload on git, you can try running the .py script in the code folder or go through the Jupter Notebook. The source file has been added in the Data folder. Running the Zip_distance.py file will generate and save the matrix on your machine and you can load it using
+
+```python
+zip_dist = np.load(os.path.join(walk_up_folder(os.getcwd(), 2), "zip_dist.npz"))['arr_0']
+```
+
     
 ## Usage/Examples
 

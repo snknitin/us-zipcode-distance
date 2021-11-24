@@ -52,7 +52,7 @@ To run the code fresh or make any changes, you can follow the steps in the Noteb
 
 ## Optimizations
 
-What optimizations did I make in your code? 
+What optimizations did I make in my code? 
 
 * Converted the matrix from 'float64' to 'float32' to reduce disk space
 * Tried using Numba.jit to speed up the iterrows and numpy loops

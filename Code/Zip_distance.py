@@ -78,40 +78,55 @@ def func(len_matrix,coordinates):
 
 
 if __name__ =="__main__":
+    
+    data_dir = os.path.join(walk_up_folder(os.getcwd(), 2), "Data/")
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir)
+        print("Data folder created")
+        
     # Load USZips data
-    zip_df = pd.read_csv(os.path.join(walk_up_folder(os.getcwd(), 3), "Data/US_zips.txt"),sep='\t',header=None,
-                         names=["country_code","postal_code","place_name","state_name","state_code",
-                                "county_name","county_code","community_name","community_code",
-                                "latitude","longitude","accuracy"])
+    source_file = os.path.join(data_dir,"US_zips.txt")
+    if os.path.exists(source_file):
+        print("Loading the source file")
+        print("Processing the dataframe")
+        zip_df = pd.read_csv(source_file),sep='\t',header=None,
+                             names=["country_code","postal_code","place_name","state_name","state_code",
+                                    "county_name","county_code","community_name","community_code",
+                                    "latitude","longitude","accuracy"])
 
-    # Dropping unnecessary columns
-    zip_df.drop(["country_code","place_name","state_name","county_name","county_code","community_name","community_code"],axis=1,inplace=True)
-    # There were 2 duplicate instances
-    zip_df.drop_duplicates(subset=["postal_code"],keep='last',inplace=True)
-    # Coordinate column as (lat,long)
-    zip_df["coord"]=list(zip(zip_df["latitude"],zip_df["longitude"]))
-    zip_df["mapping"] = zip_df.index # Column with index
+        # Dropping unnecessary columns
+        zip_df.drop(["country_code","place_name","state_name","county_name","county_code","community_name","community_code"],axis=1,inplace=True)
+        # There were 2 duplicate instances
+        zip_df.drop_duplicates(subset=["postal_code"],keep='last',inplace=True)
+        # Coordinate column as (lat,long)
+        zip_df["coord"]=list(zip(zip_df["latitude"],zip_df["longitude"]))
+        zip_df["mapping"] = zip_df.index # Column with index
 
-    # ## Lookup Matrix
-    #
-    # The idea is to form a (41483,41483) matrix where the cell values are the haversize distances between two zips that are indexed.
-    # I'll save the index look up and the matrix file as json or pkl
+        # ## Lookup Matrix
+        #
+        # The idea is to form a (41483,41483) matrix where the cell values are the haversize distances between two zips that are indexed.
+        # I'll save the index look up and the matrix file as json or pkl
 
 
-    # Dictionary mapping the zipcode to index
-    zip_index = dict(zip(zip_df["postal_code"].astype(str),zip_df["mapping"]))
-    print(len(zip_index))
-    # Saving the indexer
-    with open(os.path.join(walk_up_folder(os.getcwd(), 3), "Data/zips_indexer.json"), 'w') as f:
-        json.dump(zip_index, f)
-
-    # Matrix
-    len_matrix = zip_df.shape[0]
-    coordinates = zip_df.coord.values
-
-    # Takes 1hour. Unfortunately numba.jit doesn't work with user defined functions ")
-    zip_dist = func(len_matrix,coordinates)
-    # Convert to float32
-    np.savez_compressed(os.path.join(walk_up_folder(os.getcwd(), 3), "Data/zip_dist.npz"), np.float32(zip_dist))
+        # Dictionary mapping the zipcode to index
+        zip_index = dict(zip(zip_df["postal_code"].astype(str),zip_df["mapping"]))
+        print(len(zip_index))
+        # Saving the indexer
+        with open(os.path.join(data_dir, "zips_indexer.json")), 'w') as f:
+            json.dump(zip_index, f)
+        print("ZiptoIndex json saved!")
+        
+        # Matrix
+        len_matrix = zip_df.shape[0]
+        coordinates = zip_df.coord.values
+        
+        print("Creating the pairwise distance matrix! This might take an hour, why don't you go get something to eat? ")
+        # Takes 1hour. Unfortunately numba.jit doesn't work with user defined functions ")
+        zip_dist = func(len_matrix,coordinates)
+        # Convert to float32
+        print("ZipDist Matrix saving!")
+        np.savez_compressed(os.path.join(data_dir, "zip_dist.npz")), np.float32(zip_dist))
+    else:
+        print("Please ensure you have the source file of the raw zips data in the Data directory and try again !")
 
 

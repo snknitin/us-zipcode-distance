@@ -34,11 +34,22 @@ To run tests, run the following command
 
 What optimizations did you make in your code? E.g. refactors, performance improvements, accessibility
 
+* Converted the matrix from 'float64' to 'float32' to reduce disk space
+* Tried using Numba.jit to speed up the iterrows and numpy loops
+* `mpu.haversine` gives result in kms. Convert to miles 1km = 0.621371 miles
+
 
 ## Lessons Learned
 
 What did you learn while building this project? What challenges did you face and how did you overcome them?
 
+* **numba** - 
+    * Per the deprecation recommendations, it's very reasonable that code which doesn't compile with @jit(nopython=True) could be faster without the decorator.
+    * The available libraries that can be used with numba jit in nopython is fairly limited (pretty much only to numpy arrays and certain python builtin libraries).   
+
+* Don't use python's Pickle, don't use any database, don't use any big data system to store your data into hard disk, if you could use np.save() and np.load(). These two functions are the fastest solution to transfer data between harddisk and memory so far.
+* Using list(zip(a,b)) is much faster if yopu want top create a new pandas column that is a tuple of 2 other columns
+* To make a symmetrix pairwise matrix, initialze using `np.zeros` so that you won't need to worrty about the diagonal elements. Extrack the upper triangular indices. Add the transpose to the matrix to fill lower as well and set diagonal to 0 again
 
 ## Appendix
 
@@ -47,9 +58,11 @@ Any additional information goes here
 
 ## Acknowledgements
 
+ - [Haversine Distance](https://stackoverflow.com/questions/19412462/getting-distance-between-two-points-based-on-latitude-longitude)
  - []()
- - []()
- - []()
+ - [Pairwise matrix from 2 arrays](https://stackoverflow.com/questions/9704565/populate-numpy-matrix-from-the-difference-of-two-vectors/9704775#9704775)
+ - [Array Storage Benchmark](https://github.com/mverleg/array_storage_benchmark)
+ - [Compressed save/load NPZ](https://stackoverflow.com/questions/18231135/load-compressed-data-npz-from-file-using-numpy-load/44693995)
 
 
 
@@ -90,6 +103,6 @@ If you have any feedback, please reach out to us at `snk.nitin@gmail.com`
 
 Add badges from somewhere like: [shields.io](https://shields.io/)
 
-[![Numpy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)]
-[![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)]
+![Numpy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
+![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
 

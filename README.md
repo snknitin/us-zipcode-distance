@@ -61,8 +61,7 @@ What optimizations did I make in your code?
 
 ## Acknowledgements
 
- - [Haversine Distance](https://stackoverflow.com/questions/19412462/getting-distance-between-two-points-based-on-latitude-longitude)
- - []()
+ - [Haversine Distance Calculation](https://stackoverflow.com/questions/19412462/getting-distance-between-two-points-based-on-latitude-longitude)
  - [Pairwise matrix from 2 arrays](https://stackoverflow.com/questions/9704565/populate-numpy-matrix-from-the-difference-of-two-vectors/9704775#9704775)
  - [Array Storage Benchmark](https://github.com/mverleg/array_storage_benchmark)
  - [Compressed save/load NPZ](https://stackoverflow.com/questions/18231135/load-compressed-data-npz-from-file-using-numpy-load/44693995)

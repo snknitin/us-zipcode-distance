@@ -1,1 +1,10 @@
+## This CITATION.cff file was created by Nitin Kishore Sai Samala.
 
+message: If you used contents of this repository in your work, please cite it using the following metadata
+authors:
+- family-names: "Samala"
+  given-names: "Nitin Kishore Sai"
+  orcid: "https://orcid.org/0000-0002-7966-7523"
+title: "Pairwise Zip-code Haversine distance lookup matrix"
+date-released: 2021-11-24
+url: "https://github.com/snknitin/us-zipcode-distance"

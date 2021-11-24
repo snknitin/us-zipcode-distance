@@ -6,17 +6,21 @@ Code to create a Pairwise Zip code Distance Matrix and use an index lookup. This
 The idea is to form a (41483,41483) matrix where the cell values are the `haversine distances` between two zips that are indexed. We save the index look up and the matrix file as .npy, .json or .pkl to reload and use in different projects
 
 
-## Installation
+![Numpy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
+![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
 
-Install my-project with npm
+## Installation - Dependencies
+
+Install the folllowing python packages
 
 ```python
-pip install requirements.txt
+pip install -r requirements.txt
 ```
     
 ## Usage/Examples
 
 ```python
+
 
 ```
 
@@ -26,13 +30,14 @@ pip install requirements.txt
 To run tests, run the following command
 
 ```python
-  npm run test
+
+
 ```
 
 
 ## Optimizations
 
-What optimizations did you make in your code? E.g. refactors, performance improvements, accessibility
+What optimizations did I make in your code? 
 
 * Converted the matrix from 'float64' to 'float32' to reduce disk space
 * Tried using Numba.jit to speed up the iterrows and numpy loops
@@ -41,19 +46,17 @@ What optimizations did you make in your code? E.g. refactors, performance improv
 
 ## Lessons Learned
 
-What did you learn while building this project? What challenges did you face and how did you overcome them?
 
 * **numba** - 
     * Per the deprecation recommendations, it's very reasonable that code which doesn't compile with @jit(nopython=True) could be faster without the decorator.
     * The available libraries that can be used with numba jit in nopython is fairly limited (pretty much only to numpy arrays and certain python builtin libraries).   
-
 * Don't use python's Pickle, don't use any database, don't use any big data system to store your data into hard disk, if you could use np.save() and np.load(). These two functions are the fastest solution to transfer data between harddisk and memory so far.
 * Using list(zip(a,b)) is much faster if yopu want top create a new pandas column that is a tuple of 2 other columns
 * To make a symmetrix pairwise matrix, initialze using `np.zeros` so that you won't need to worrty about the diagonal elements. Extrack the upper triangular indices. Add the transpose to the matrix to fill lower as well and set diagonal to 0 again
 
-## Appendix
+## Authors
 
-Any additional information goes here
+- [@snknitin](https://www.github.com/snknitin)
 
 
 ## Acknowledgements
@@ -84,10 +87,6 @@ No. You can change the source file of the zip details from [here](https://github
 Answer 2
 
 
-## Authors
-
-- [@snknitin](https://www.github.com/snknitin)
-
 
 ## Feedback
 
@@ -99,10 +98,6 @@ If you have any feedback, please reach out to us at `snk.nitin@gmail.com`
 [Apache 2.0](https://choosealicense.com/licenses/apache-2.0/)
 
 
-## Badges
 
-Add badges from somewhere like: [shields.io](https://shields.io/)
 
-![Numpy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
-![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
 

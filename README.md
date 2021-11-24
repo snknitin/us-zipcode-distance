@@ -20,19 +20,22 @@ pip install -r requirements.txt
 ## Usage/Examples
 
 ```python
+# Load the saved objects
+f = open(os.path.join(walk_up_folder(os.getcwd(), 3), "Data/zips_indexer.json"))
+zips_indexer = json.load(f)
+zip_dist = np.load(os.path.join(walk_up_folder(os.getcwd(), 3), "Data/zip_dist.npz"))['arr_0']
 
+a='95035' # Zipcode as String
+b='94085'
+
+# Extract that cell value from the distance matrix
+distance = zip_dist[zips_indexer[a],zips_indexer[b]]
 
 ```
 
+## Running Code
 
-## Running Tests
-
-To run tests, run the following command
-
-```python
-
-
-```
+To run the code fresh or make any changes, you can follow the steps in the Notebook
 
 
 ## Optimizations
@@ -42,6 +45,7 @@ What optimizations did I make in your code?
 * Converted the matrix from 'float64' to 'float32' to reduce disk space
 * Tried using Numba.jit to speed up the iterrows and numpy loops
 * `mpu.haversine` gives result in kms. Convert to miles 1km = 0.621371 miles
+* Did not normalize the matrix before saving since i do need the raw distance values and since it is pairwise the max distance will be too high
 
 
 ## Lessons Learned

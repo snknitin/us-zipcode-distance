@@ -75,6 +75,18 @@ What optimizations did I make in my code?
 - [@snknitin](https://www.github.com/snknitin)
 
 
+## Bibtex
+
+Please use the following bibtex, when you refer
+
+    @software{Samala_Pairwise_Zip-code_Haversine_2021,
+    author = {Samala, Nitin Kishore Sai},
+    month = {11},
+    title = {{Pairwise Zip-code Haversine distance lookup matrix}},
+    url = {https://github.com/snknitin/us-zipcode-distance},
+    year = {2021}
+    }
+
 ## Acknowledgements
 
  - [Haversine Distance Calculation](https://stackoverflow.com/questions/19412462/getting-distance-between-two-points-based-on-latitude-longitude)
